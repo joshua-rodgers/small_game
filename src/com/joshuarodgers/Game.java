@@ -18,8 +18,11 @@ public class Game {
     Graphics game_surface_ctx;
     Graphics game_back_buffer_ctx;
     Image game_back_buffer;
+
+    Input game_input;
     
     Game_Object player;
+    int frame_count;
 
 
 
@@ -42,6 +45,8 @@ public class Game {
                 System.exit(0);
             }
         });
+        game_input = new Input(this);
+        game_window.addKeyListener(game_input);
         game_window.pack();
     }
 
@@ -57,7 +62,12 @@ public class Game {
         player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10));
     }
 
+    private void update_animations(){
+
+    }
+
     private void render(){
+        update_animations();
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
         game_back_buffer_ctx.setColor(Color.GREEN);
         game_back_buffer_ctx.fillRect(100, 100, 20, 20);

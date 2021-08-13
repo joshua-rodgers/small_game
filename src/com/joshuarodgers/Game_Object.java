@@ -11,6 +11,8 @@ public class Game_Object {
     Dimension sprite_size;
     Point position;
 
+    boolean is_moving;
+
     int animation_current_frame;
 
     public Game_Object(Image sprite_sheet, Dimension sprite_size, Point starting_position){
