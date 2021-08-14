@@ -1,7 +1,7 @@
 package com.joshuarodgers;
 
 import java.awt.Frame;
-import java.awt.Canvas;
+import java.awt.Panel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 
 public class Game {
     Frame game_window;
-    Canvas game_surface;
+    Panel game_surface;
     Graphics game_surface_ctx;
     Graphics game_back_buffer_ctx;
     Image game_back_buffer;
@@ -38,7 +38,8 @@ public class Game {
     private void init_window(){
         game_window = new Frame("Small Game");
         game_window.setSize(300, 300);
-        game_surface = new Canvas();
+        game_surface = new Panel();
+        game_surface.setSize(300, 300);
         game_surface.setPreferredSize(game_window.getSize());
         game_surface.setBackground(Color.BLACK);
         game_window.add(game_surface);
@@ -69,19 +70,29 @@ public class Game {
     private void render(){
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
         game_back_buffer_ctx.setColor(Color.GREEN);
-        game_back_buffer_ctx.fillRect(100, 100, 20, 20);
-        game_back_buffer_ctx.drawImage(player.sprite_sheet, player.position.x, player.position.y, player.animation_sprite_position_second_corner.x, player.animation_sprite_position_second_corner.y,
+        game_back_buffer_ctx.fillRect(20,20, 20, 20);
+        game_back_buffer_ctx.drawImage(player.sprite_sheet, player.position.x, player.position.y, player.position.x + (int)player.sprite_size.getWidth(), player.position.y + (int)player.sprite_size.getHeight(),
         player.animation_sprite_first_corner.x, player.animation_sprite_first_corner.y, player.animation_sprite_second_corner.x, player.animation_sprite_second_corner.y, null);
         game_surface_ctx.drawImage(game_back_buffer, 0, 0, null);
     }
 
     public void run(){
+        long elapsed = 0;
+        long started = 0;
+        long ended = 0;
         while(true){
             try{
-                physics.update();
-                game_animation.new_frame();
+                started = System.currentTimeMillis();
+                
                 render();
                 Thread.sleep(1000/30);
+                ended = System.currentTimeMillis();
+                elapsed += ended - started;
+                if(elapsed >= 83){
+                    physics.update();
+                    game_animation.new_frame();
+                    elapsed = 0;
+                }
             }catch(Exception e){
                 e.printStackTrace();
             }

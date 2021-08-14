@@ -27,8 +27,8 @@ public class Game_Object {
         this.animation_frame_rate = animation_frame_rate;
         animation_current_frame = 0;
         animation_sprite_first_corner = new Point();
-        animation_sprite_second_corner = new Point();
-        animation_sprite_position_second_corner = new Point();
+        animation_sprite_second_corner = new Point(animation_sprite_first_corner.x + sprite_size.width, animation_sprite_first_corner.y + sprite_size.height);
+        animation_sprite_position_second_corner = new Point(starting_position.x + (int)sprite_size.getWidth(), starting_position.y + (int)sprite_size.getHeight());
     }
 
     public void update_sprite(){
@@ -44,8 +44,6 @@ public class Game_Object {
             animation_sprite_second_corner.x = animation_sprite_first_corner.x + (int)sprite_size.getWidth();
             animation_sprite_second_corner.y = animation_sprite_first_corner.y + (int)sprite_size.getHeight();
     
-            animation_sprite_position_second_corner.x = position.x + (int)sprite_size.getWidth();
-            animation_sprite_position_second_corner.y = position.y + (int)sprite_size.getHeight();
         }else{
             animation_current_frame = 0;
             animation_sprite_first_corner.x = animation_current_frame * (int)sprite_size.getWidth();

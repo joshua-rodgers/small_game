@@ -17,15 +17,19 @@ public class Physics {
         
         switch(direction){
             case 1:
-                game.player.position.x -= 10;
+                if(game.player.position.x > 0)
+                    game.player.position.x -= 10;
                 break;
             case 2:
-                game.player.position.y -= 10;
+                if(game.player.position.y > 0)
+                    game.player.position.y -= 10;
                 break;
             case 3:
-                game.player.position.x += 10;
+                if(game.player.animation_sprite_position_second_corner.x < game.game_window.getWidth())
+                    game.player.position.x += 10;
                 break;
             case 4:
+                if(game.player.animation_sprite_position_second_corner.y < game.game_window.getHeight())
                 game.player.position.y += 10;
                 break;
             default:
