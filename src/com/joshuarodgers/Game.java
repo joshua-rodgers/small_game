@@ -20,6 +20,8 @@ public class Game {
     Image game_back_buffer;
 
     Input game_input;
+    Physics physics;
+    Animation game_animation;
     
     Game_Object player;
     int frame_count;
@@ -59,25 +61,25 @@ public class Game {
     private void init_game_objects(){
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image player_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/player_sheet.png");
-        player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10));
-    }
-
-    private void update_animations(){
-
+        player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3);
+        game_animation = new Animation(this);
+        physics = new Physics(this);
     }
 
     private void render(){
-        update_animations();
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
         game_back_buffer_ctx.setColor(Color.GREEN);
         game_back_buffer_ctx.fillRect(100, 100, 20, 20);
-        game_back_buffer_ctx.drawImage(player.sprite_sheet, 0, 0, null);
+        game_back_buffer_ctx.drawImage(player.sprite_sheet, player.position.x, player.position.y, player.animation_sprite_position_second_corner.x, player.animation_sprite_position_second_corner.y,
+        player.animation_sprite_first_corner.x, player.animation_sprite_first_corner.y, player.animation_sprite_second_corner.x, player.animation_sprite_second_corner.y, null);
         game_surface_ctx.drawImage(game_back_buffer, 0, 0, null);
     }
 
     public void run(){
         while(true){
             try{
+                physics.update();
+                game_animation.new_frame();
                 render();
                 Thread.sleep(1000/30);
             }catch(Exception e){

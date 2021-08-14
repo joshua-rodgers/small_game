@@ -14,19 +14,20 @@ public class Input extends KeyAdapter{
         int pressed = e.getKeyCode();
         switch(pressed){
             case 37:
+                game.physics.player_moving_left = true;
                 game.player.is_moving = true;
-                
                 break;
             case 38:
-                System.out.println("UP");
-                
+                game.physics.player_moving_up = true;
+                game.player.is_moving = true;
                 break;
             case 39:
-                System.out.println("RIGHT");
-                
+                game.physics.player_moving_right = true;
+                game.player.is_moving = true;
                 break;
             case 40:
-                System.out.println("DOWN");
+                game.physics.player_moving_down = true;
+                game.player.is_moving = true;
                 break;
             default:
         }
@@ -36,16 +37,20 @@ public class Input extends KeyAdapter{
         int active = e.getKeyCode();
         switch(active){
             case 37:
+                game.physics.player_moving_left = false;
                 game.player.is_moving = false;
                 break;
             case 38:
-                System.out.println("released UP");
+                game.physics.player_moving_up = false;
+                game.player.is_moving = false;
                 break;
-            case 39:
-                System.out.println("released RIGHT");
+            case 39:   
+                game.physics.player_moving_right = false;
+                game.player.is_moving = false;             
                 break;
             case 40:
-                System.out.println("released DOWN");
+                game.physics.player_moving_down = false;
+                game.player.is_moving = false;
                 break;
             default:
         }
