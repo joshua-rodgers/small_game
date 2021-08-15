@@ -76,7 +76,7 @@ public class Game {
 
     private void render(){
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
-        for(Game_Object o : game_animation.followers){
+        for(Game_Object o : game_objects){
             game_back_buffer_ctx.drawImage(o.sprite_sheet, o.position.x, o.position.y, o.position.x + (int)o.sprite_size.getWidth(), o.position.y + (int)o.sprite_size.getHeight(),
             o.animation_sprite_first_corner.x, o.animation_sprite_first_corner.y, o.animation_sprite_second_corner.x, o.animation_sprite_second_corner.y, null);
         }
@@ -98,7 +98,7 @@ public class Game {
                 ended = System.currentTimeMillis();
                 elapsed += ended - started;
                 if(elapsed >= 83){
-                    game_animation.new_frame();
+                    game_animation.update_sprite();
                     elapsed = 0;
                 }
             }catch(Exception e){
