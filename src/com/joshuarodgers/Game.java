@@ -12,7 +12,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import java.util.List;
-
 import java.util.ArrayList;
 
 public class Game {
@@ -68,7 +67,7 @@ public class Game {
         Image token_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/coin_sheet.png");
         player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3, false);
         game_objects.add(new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(10, 10), 2, true));
-        game_objects.add(player);
+        // game_objects.add(player);
         game_animation = new Animation(this);
         physics = new Physics(this);
         collision = new Collision(this);
@@ -76,6 +75,9 @@ public class Game {
 
     private void render(){
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
+        game_back_buffer_ctx.drawImage(player.sprite_sheet, player.position.x, player.position.y, player.position.x + (int)player.sprite_size.getWidth(), player.position.y + (int)player.sprite_size.getHeight(),
+        player.animation_sprite_first_corner.x, player.animation_sprite_first_corner.y, player.animation_sprite_second_corner.x, player.animation_sprite_second_corner.y, null);
+
         for(Game_Object o : game_objects){
             game_back_buffer_ctx.drawImage(o.sprite_sheet, o.position.x, o.position.y, o.position.x + (int)o.sprite_size.getWidth(), o.position.y + (int)o.sprite_size.getHeight(),
             o.animation_sprite_first_corner.x, o.animation_sprite_first_corner.y, o.animation_sprite_second_corner.x, o.animation_sprite_second_corner.y, null);
@@ -98,7 +100,10 @@ public class Game {
                 ended = System.currentTimeMillis();
                 elapsed += ended - started;
                 if(elapsed >= 83){
-                    game_animation.update_sprite();
+                    game_animation.update_sprite(player);
+                    for(Game_Object o : game_objects){
+                        game_animation.update_sprite(o);
+                    }
                     elapsed = 0;
                 }
             }catch(Exception e){
