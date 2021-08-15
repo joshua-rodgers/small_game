@@ -25,11 +25,11 @@ public class Physics {
                     game.player.position.y -= 10;
                 break;
             case 3:
-                if(game.player.animation_sprite_position_second_corner.x < game.game_window.getWidth())
+                if(game.player.position.x + game.player.sprite_size.width < game.game_window.getWidth())
                     game.player.position.x += 10;
                 break;
             case 4:
-                if(game.player.animation_sprite_position_second_corner.y < game.game_window.getHeight())
+                if(game.player.position.y + game.player.sprite_size.height < game.game_window.getHeight())
                 game.player.position.y += 10;
                 break;
             default:

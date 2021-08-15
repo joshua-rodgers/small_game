@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import com.joshuarodgers.Game_Object;
+
 
 public class Game {
     Frame game_window;
@@ -24,6 +26,7 @@ public class Game {
     Animation game_animation;
     
     Game_Object player;
+    Game_Object token;
     int frame_count;
 
 
@@ -62,17 +65,20 @@ public class Game {
     private void init_game_objects(){
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image player_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/player_sheet.png");
-        player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3);
+        Image token_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/coin_sheet.png");
+        player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3, false);
+        token = new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(10, 10), 2, true);
         game_animation = new Animation(this);
         physics = new Physics(this);
     }
 
     private void render(){
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
-        game_back_buffer_ctx.setColor(Color.GREEN);
-        game_back_buffer_ctx.fillRect(20,20, 20, 20);
-        game_back_buffer_ctx.drawImage(player.sprite_sheet, player.position.x, player.position.y, player.position.x + (int)player.sprite_size.getWidth(), player.position.y + (int)player.sprite_size.getHeight(),
-        player.animation_sprite_first_corner.x, player.animation_sprite_first_corner.y, player.animation_sprite_second_corner.x, player.animation_sprite_second_corner.y, null);
+        for(Game_Object o : game_animation.followers){
+            game_back_buffer_ctx.drawImage(o.sprite_sheet, o.position.x, o.position.y, o.position.x + (int)o.sprite_size.getWidth(), o.position.y + (int)o.sprite_size.getHeight(),
+            o.animation_sprite_first_corner.x, o.animation_sprite_first_corner.y, o.animation_sprite_second_corner.x, o.animation_sprite_second_corner.y, null);
+        }
+        
         game_surface_ctx.drawImage(game_back_buffer, 0, 0, null);
     }
 

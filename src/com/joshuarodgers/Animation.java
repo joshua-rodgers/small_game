@@ -9,6 +9,7 @@ public class Animation {
     public Animation(Game game){
         followers = new ArrayList<>();
         followers.add(game.player);
+        followers.add(game.token);
     }
 
     public void new_frame(){
