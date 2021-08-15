@@ -11,8 +11,9 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import com.joshuarodgers.Game_Object;
+import java.util.List;
 
+import java.util.ArrayList;
 
 public class Game {
     Frame game_window;
@@ -23,13 +24,11 @@ public class Game {
 
     Input game_input;
     Physics physics;
+    Collision collision;
     Animation game_animation;
-    
     Game_Object player;
-    Game_Object token;
-    int frame_count;
-
-
+    
+    ArrayList<Game_Object> game_objects;
 
     public Game(){
         init_window();
@@ -63,13 +62,16 @@ public class Game {
     }
 
     private void init_game_objects(){
+        game_objects = new ArrayList<>();
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image player_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/player_sheet.png");
         Image token_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/coin_sheet.png");
         player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3, false);
-        token = new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(10, 10), 2, true);
+        game_objects.add(new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(10, 10), 2, true));
+        game_objects.add(player);
         game_animation = new Animation(this);
         physics = new Physics(this);
+        collision = new Collision(this);
     }
 
     private void render(){
@@ -89,13 +91,13 @@ public class Game {
         while(true){
             try{
                 started = System.currentTimeMillis();
-                
+                physics.update();
+                collision.check_collisions();
                 render();
                 Thread.sleep(1000/30);
                 ended = System.currentTimeMillis();
                 elapsed += ended - started;
                 if(elapsed >= 83){
-                    physics.update();
                     game_animation.new_frame();
                     elapsed = 0;
                 }

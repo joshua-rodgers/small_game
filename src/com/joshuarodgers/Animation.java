@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Animation {
-    List<Game_Object> followers;
+    ArrayList<Game_Object> followers;
 
     public Animation(Game game){
-        followers = new ArrayList<>();
-        followers.add(game.player);
-        followers.add(game.token);
+        followers = game.game_objects;
     }
 
     public void new_frame(){
