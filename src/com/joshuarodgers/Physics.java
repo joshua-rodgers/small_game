@@ -34,6 +34,7 @@ public class Physics {
                 break;
             default:
         }
+        game.player.sprite_bounds.setBounds(game.player.position.x, game.player.position.y, game.player.sprite_size.width, game.player.sprite_size.height);
     }
     
     public void update(){

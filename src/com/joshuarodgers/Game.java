@@ -66,7 +66,7 @@ public class Game {
         Image player_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/player_sheet.png");
         Image token_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/coin_sheet.png");
         player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3, false);
-        game_objects.add(new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(10, 10), 2, true));
+        game_objects.add(new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(100, 100), 2, true));
         // game_objects.add(player);
         game_animation = new Animation(this);
         physics = new Physics(this);

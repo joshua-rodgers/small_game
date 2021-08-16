@@ -18,10 +18,10 @@ public class Animation {
             }else{
                 o.animation_current_frame = 1;
             }
-    
         }else{
             o.animation_current_frame = 0;
         }
+        
         o.animation_sprite_first_corner.x = o.animation_current_frame * (int)o.sprite_size.getWidth();
         o.animation_sprite_first_corner.y = 0;
         o.animation_sprite_second_corner.x = o.animation_sprite_first_corner.x + (int)o.sprite_size.getWidth();
