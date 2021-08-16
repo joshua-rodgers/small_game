@@ -25,7 +25,7 @@ public class Game {
     Physics physics;
     Collision collision;
     Animation game_animation;
-    Game_Object player;
+    Player player;
     
     ArrayList<Game_Object> game_objects;
 
@@ -65,8 +65,12 @@ public class Game {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image player_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/player_sheet.png");
         Image token_sprite_sheet = tk.getImage("/Users/joshua/Documents/Github/small_game/assets/coin_sheet.png");
-        player = new Game_Object(player_sprite_sheet, new Dimension(64, 64), new Point(10, 10), 3, false);
-        game_objects.add(new Game_Object(token_sprite_sheet, new Dimension(32, 32), new Point(100, 100), 2, true));
+        player = new Player(player_sprite_sheet);
+        int coin_count = Game_Utils.get_rand(5);
+        for(int i = 0; i <= coin_count ; i++){
+            game_objects.add(new Coin(token_sprite_sheet));
+        }
+        
         // game_objects.add(player);
         game_animation = new Animation(this);
         physics = new Physics(this);
@@ -79,9 +83,12 @@ public class Game {
         player.animation_sprite_first_corner.x, player.animation_sprite_first_corner.y, player.animation_sprite_second_corner.x, player.animation_sprite_second_corner.y, null);
 
         for(Game_Object o : game_objects){
-            game_back_buffer_ctx.drawImage(o.sprite_sheet, o.position.x, o.position.y, o.position.x + (int)o.sprite_size.getWidth(), o.position.y + (int)o.sprite_size.getHeight(),
-            o.animation_sprite_first_corner.x, o.animation_sprite_first_corner.y, o.animation_sprite_second_corner.x, o.animation_sprite_second_corner.y, null);
+            if(o.is_active)
+                game_back_buffer_ctx.drawImage(o.sprite_sheet, o.position.x, o.position.y, o.position.x + (int)o.sprite_size.getWidth(), o.position.y + (int)o.sprite_size.getHeight(),
+                o.animation_sprite_first_corner.x, o.animation_sprite_first_corner.y, o.animation_sprite_second_corner.x, o.animation_sprite_second_corner.y, null);
         }
+        game_back_buffer_ctx.setColor(Color.WHITE);
+        game_back_buffer_ctx.drawString("Score: " + player.score, 200, 200);
         
         game_surface_ctx.drawImage(game_back_buffer, 0, 0, null);
     }
@@ -102,7 +109,8 @@ public class Game {
                 if(elapsed >= 83){
                     game_animation.update_sprite(player);
                     for(Game_Object o : game_objects){
-                        game_animation.update_sprite(o);
+                        if(o.is_active)
+                            game_animation.update_sprite(o);
                     }
                     elapsed = 0;
                 }

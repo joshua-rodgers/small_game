@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 
 
-public class Game_Object {
+public abstract class Game_Object {
+    String name;
+    
     Image sprite_sheet;
     
     Dimension sprite_size;
