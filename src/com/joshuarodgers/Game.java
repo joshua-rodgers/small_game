@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Point;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -25,6 +26,7 @@ public class Game {
     Physics physics;
     Collision collision;
     Animation game_animation;
+    Room room;
     Player player;
     
     ArrayList<Game_Object> game_objects;
@@ -70,6 +72,7 @@ public class Game {
         for(int i = 0; i <= coin_count ; i++){
             game_objects.add(new Coin(token_sprite_sheet));
         }
+        room = new Room(this);
         
         // game_objects.add(player);
         game_animation = new Animation(this);
@@ -77,8 +80,18 @@ public class Game {
         collision = new Collision(this);
     }
 
+    private void render_room(){
+        game_back_buffer_ctx.setColor(room.floor_color);
+        game_back_buffer_ctx.fillRect(room.floor.x, room.floor.y, room.floor.width, room.floor.height);
+        game_back_buffer_ctx.setColor(room.wall_color);
+        for(Rectangle r : room.walls){
+            game_back_buffer_ctx.fillRect(r.x, r.y, r.width, r.height);
+        }
+    }
+
     private void render(){
         game_back_buffer_ctx.clearRect(0, 0, game_window.getWidth(), game_window.getHeight());
+        render_room();
         game_back_buffer_ctx.drawImage(player.sprite_sheet, player.position.x, player.position.y, player.position.x + (int)player.sprite_size.getWidth(), player.position.y + (int)player.sprite_size.getHeight(),
         player.animation_sprite_first_corner.x, player.animation_sprite_first_corner.y, player.animation_sprite_second_corner.x, player.animation_sprite_second_corner.y, null);
 
