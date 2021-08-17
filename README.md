@@ -2,6 +2,10 @@
 making a small top down 2d game with animated sprites from scratch in Java 
 
 
+![character walking in room](demos/demo2.gif)
+
+beginning to add rooms.
+
 
 ![character walking about collecting spinning coins](demos/demo1.gif)
 
