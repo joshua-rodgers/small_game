@@ -11,7 +11,7 @@ public class Room {
 
     public Room(Game game){
         this.game = game;
-        floor = new Rectangle(new Point(0, 0), game.game_window.getSize());
+        floor = new Rectangle(new Point(0, 0), game.game_surface.getSize());
         walls = new Rectangle[4];
         walls[0] = new Rectangle(0,0,floor.width, 20);
         walls[1] = new Rectangle(0,0, 20, floor.height);

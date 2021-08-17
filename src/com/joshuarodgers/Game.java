@@ -40,10 +40,10 @@ public class Game {
 
     private void init_window(){
         game_window = new Frame("Small Game");
-        game_window.setSize(300, 300);
+        game_window.setSize(400, 400);
         game_surface = new Panel();
         game_surface.setSize(300, 300);
-        game_surface.setPreferredSize(game_window.getSize());
+        game_surface.setPreferredSize(new Dimension(300, 300));
         game_surface.setBackground(Color.BLACK);
         game_window.add(game_surface);
         game_window.addWindowListener(new WindowAdapter(){
