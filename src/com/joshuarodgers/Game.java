@@ -26,15 +26,15 @@ public class Game {
     Physics physics;
     Collision collision;
     Animation game_animation;
-    Room room;
+    Basic_Room room;
     Player player;
-    
+
     ArrayList<Game_Object> game_objects;
 
     public Game(){
         init_window();
-        init_graphics();
         init_game_objects();
+        init_graphics();
         game_window.setVisible(true);
     }
 
@@ -72,8 +72,8 @@ public class Game {
         for(int i = 0; i <= coin_count ; i++){
             game_objects.add(new Coin(token_sprite_sheet));
         }
-        room = new Room(this);
-        
+        room = new Basic_Room(300, 300);
+
         // game_objects.add(player);
         game_animation = new Animation(this);
         physics = new Physics(this);
@@ -82,10 +82,10 @@ public class Game {
 
     private void render_room(){
         game_back_buffer_ctx.setColor(room.floor_color);
-        game_back_buffer_ctx.fillRect(room.floor.x, room.floor.y, room.floor.width, room.floor.height);
+        game_back_buffer_ctx.fillPolygon(room.floor);
         game_back_buffer_ctx.setColor(room.wall_color);
-        for(Rectangle r : room.walls){
-            game_back_buffer_ctx.fillRect(r.x, r.y, r.width, r.height);
+        for(Wall w : room.walls){
+            game_back_buffer_ctx.fillRect(w.position.x, w.position.y, w.size.width, w.size.height);
         }
     }
 
@@ -102,7 +102,7 @@ public class Game {
         }
         game_back_buffer_ctx.setColor(Color.WHITE);
         game_back_buffer_ctx.drawString("Score: " + player.score, 200, 200);
-        
+
         game_surface_ctx.drawImage(game_back_buffer, 0, 0, null);
     }
 
@@ -139,5 +139,3 @@ public class Game {
     }
 
 }
-
-
